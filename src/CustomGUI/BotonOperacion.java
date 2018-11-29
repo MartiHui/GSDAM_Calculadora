@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import Vista.v_Calculadora;
 
 public class BotonOperacion extends JButton {
+	public static final int WIDTH = 75;
+	public static final int HEIGHT = 50;
+	
 	public enum Operacion {
 		IGUAL,
 		CE,
@@ -19,13 +22,20 @@ public class BotonOperacion extends JButton {
 		DIVISION,
 		MULTIPLICACION,
 		RESTA,
-		SUMA
+		SUMA,
+		PARENTESIS_ABRIR,
+		PARENTESIS_CERRAR,
+		EXPONENTE,
+		RAIZ_CUADRADA,
+		SENO,
+		COSENO,
+		TANGENTE
 	}
 	
-	Operacion op;
+	private Operacion op;
 	
 	public BotonOperacion(int posX, int posY, int op) {
-		setBounds(posX, posY, 75, 50);
+		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0xAFB2B7));
 		setMargin(new Insets(0, 0, 0, 0)); // Si no quitamos los margenes hay texto que no se veria en los botones
 		setFont(v_Calculadora.openSans.deriveFont(Font.PLAIN, 36));
@@ -78,8 +88,39 @@ public class BotonOperacion extends JButton {
 			temp = "+";
 			break;
 			
+		case PARENTESIS_ABRIR:
+			temp = "(";
+			break;
+			
+		case PARENTESIS_CERRAR:
+			temp = ")";
+			break;
+			
+		case EXPONENTE:
+			temp = "^";
+			break;
+			
+		case RAIZ_CUADRADA:
+			temp = "√";
+			break;
+			
+		case SENO:
+			temp = "sin";
+			break;
+			
+		case COSENO:
+			temp = "cos";
+			break;
+			
+		case TANGENTE:
+			temp = "tan";
+			break;
 		}
 		
 		return temp;
+	}
+	
+	public Operacion operacion() {
+		return op;
 	}
 }

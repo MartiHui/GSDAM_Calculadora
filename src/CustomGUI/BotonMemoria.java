@@ -8,6 +8,9 @@ import javax.swing.JButton;
 import Vista.v_Calculadora;
 
 public class BotonMemoria extends JButton {
+	public static final int WIDTH = 60;
+	public static final int HEIGHT = 25;
+	
 	public enum MemoriaOperacion {
 		CLEAR, // Elimina el número en memoria
 		RECALL, // Recupera el número en memoria
@@ -19,7 +22,7 @@ public class BotonMemoria extends JButton {
 	private MemoriaOperacion operacion;
 	
 	public BotonMemoria(int posX, int posY, int operacion) {
-		setBounds(posX, posY, 60, 25);
+		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0x7F8084));
 		setFont(v_Calculadora.openSans_Bold.deriveFont(Font.BOLD, 16));
 		this.operacion = MemoriaOperacion.values()[operacion];
@@ -57,7 +60,7 @@ public class BotonMemoria extends JButton {
 	}
 	
 	// Solo permitimos saber que operación tiene el botón. No podemos cambiarlo una vez creado
-	public MemoriaOperacion getOperacion() {
+	public MemoriaOperacion operacion() {
 		return operacion;
 	}
 }
