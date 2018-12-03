@@ -11,10 +11,14 @@ CREATE TABLE usuarios (
 	PRIMARY KEY (id_usuario)
 );
 
+DELIMITER $$
 CREATE TRIGGER new_user BEFORE INSERT ON usuarios FOR EACH ROW
 BEGIN
-	IF (EXISTS(SELECT * FROM usuarios WHERE usuarios = new.usuarios) 
-END
+	IF ((SELECT COUNT(*) FROM usuarios WHERE nombre = new.nombre) > 0) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ya existe un usuario con este nombre.'; 
+	END IF;
+END $$
+DELIMITER ;
 
 DROP TABLE IF EXISTS operaciones;
 CREATE TABLE operaciones (
