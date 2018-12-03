@@ -285,12 +285,6 @@ public class v_Calculadora extends JFrame {
 	
 	private void botonModo() {
 		mode_btn = new BotonModo();
-		mode_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				switchMode();
-			}
-		});
-		
 		contentPane.add(mode_btn);
 	}
 	
