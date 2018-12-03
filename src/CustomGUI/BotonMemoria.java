@@ -7,10 +7,20 @@ import javax.swing.JButton;
 
 import Vista.v_Calculadora;
 
+/**
+ * Botón propio derivado de JButton para la creación de los botones de memoria.
+ * @author Hui Yang Yang
+ *
+ */
 public class BotonMemoria extends JButton {
 	public static final int WIDTH = 60;
 	public static final int HEIGHT = 25;
 	
+	/**
+	 * Las operaciones que se pueden realizar respecto a la memoria de la calculadora
+	 * @author Hui Yang Yang
+	 *
+	 */
 	public enum MemoriaOperacion {
 		CLEAR, // Elimina el número en memoria
 		RECALL, // Recupera el número en memoria
@@ -21,6 +31,12 @@ public class BotonMemoria extends JButton {
 	
 	private MemoriaOperacion operacion;
 	
+	/**
+	 * Constructor de BotonMemoria
+	 * @param posX la posición del borde izquierdo del botón
+	 * @param posY la posición del borde superior del botón
+	 * @param operacion índice de la operación que va a realizar el botón, relativo al enum {@link MemoriaOperacion}
+	 */
 	public BotonMemoria(int posX, int posY, int operacion) {
 		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0x7F8084));
@@ -59,7 +75,9 @@ public class BotonMemoria extends JButton {
 		return temp;
 	}
 	
-	// Solo permitimos saber que operación tiene el botón. No podemos cambiarlo una vez creado
+	/**
+	 * @return La {@link MemoriaOperacion} que representa el botón.
+	 */
 	public MemoriaOperacion operacion() {
 		return operacion;
 	}

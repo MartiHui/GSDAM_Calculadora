@@ -1,6 +1,5 @@
 package Vista;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -19,13 +18,16 @@ import java.io.IOException;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Toolkit;
 
+/**
+ * Crea todos los elementos visuales de la calculadora.
+ * @author Hui Yang Yang
+ *
+ */
 public class v_Calculadora extends JFrame {
 	private JPanel contentPane;
 	
@@ -67,7 +69,9 @@ public class v_Calculadora extends JFrame {
 		setVisible(true);
 	}
 	
-	// Crea la ventana principal de la calculadora y ajusta su tamaño
+	/**
+	 *  Crea la ventana principal de la calculadora y ajusta su tamaño.
+	 */
 	private void prepareFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(v_Calculadora.class.getResource("/Recursos/Imagenes/logo.png")));
@@ -82,7 +86,9 @@ public class v_Calculadora extends JFrame {
 		setResizable(false);
 	}
 	
-	// Obtiene las fuentes propias de la carpeta de recursos para poder usarlas
+	/**
+	 *  Obtiene las fuentes propias de la carpeta de recursos para poder usarlas.
+	 */
 	private void getFonts() {
 		try {
 			openSans = Font.createFont(Font.TRUETYPE_FONT, v_Calculadora.class.getResourceAsStream("/Recursos/Fuentes/OpenSans-Regular.ttf"));
@@ -94,7 +100,9 @@ public class v_Calculadora extends JFrame {
 		}
 	}
 	
-	// Crea la barra de menú con sus submenús y opciones
+	/**
+	 *  Crea la barra de menú con sus submenús y opciones.
+	 */
 	private void createMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -123,7 +131,9 @@ public class v_Calculadora extends JFrame {
 		usuarios_menu.add(desconectar_mnItem);
 	}
 	
-	// Crea las pantallas donde se mostrarán los inputs del usuario y el restulado de las operaciones
+	/**
+	 *  Crea las pantallas donde se mostrarán los inputs del usuario y el restulado de las operaciones.
+	 */
 	private void createPantalla() {
 		// Pantalla que mostrará la ecuación actual
 		operaciones_textField = new JTextField();
@@ -146,7 +156,9 @@ public class v_Calculadora extends JFrame {
 		contentPane.add(resultado_textField);
 	}
 	
-	// Crea todos los botones de la calculadora, tanto normal como científica
+	/**
+	 *  Crea todos los botones de la calculadora, tanto normal como científica.
+	 */
 	private void createBotones() {
 		botonesMemoria();
 		botonesNumero();
@@ -288,6 +300,9 @@ public class v_Calculadora extends JFrame {
 		contentPane.add(mode_btn);
 	}
 	
+	/**
+	 * Cambia el aspecto de la calculadora entre normal y científica.
+	 */
 	public void switchMode() {
 		inNormalMode = !inNormalMode;
 		

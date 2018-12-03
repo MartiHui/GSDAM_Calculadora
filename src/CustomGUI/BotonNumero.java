@@ -7,6 +7,11 @@ import javax.swing.JButton;
 
 import Vista.v_Calculadora;
 
+/**
+ * Botón propio derivado de JButton para la creación de los botones de números.
+ * @author Hui Yang Yang
+ *
+ */
 public class BotonNumero extends JButton {
 	public static final int WIDTH = 75;
 	public static final int HEIGHT = 50;
@@ -21,6 +26,9 @@ public class BotonNumero extends JButton {
 		setText(String.valueOf(num));
 	}
 	
+	/**
+	 * @return Un int con el valor que representa el botón
+	 */
 	public int value() {
 		return buttonValue;
 	}

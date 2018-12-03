@@ -3,7 +3,6 @@ package CustomGUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
-import java.awt.Rectangle;
 
 import javax.swing.JButton;
 

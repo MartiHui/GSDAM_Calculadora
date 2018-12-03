@@ -8,10 +8,20 @@ import javax.swing.JButton;
 
 import Vista.v_Calculadora;
 
+/**
+ * Botón propio derivado de JButton para la creación de los botones de operación.
+ * @author Hui Yang Yang
+ *
+ */
 public class BotonOperacion extends JButton {
 	public static final int WIDTH = 75;
 	public static final int HEIGHT = 50;
 	
+	/**
+	 * Las operaciones que puede realizar la calculadora
+	 * @author Hui Yang Yang
+	 *
+	 */
 	public enum Operacion {
 		IGUAL,
 		CE,
@@ -34,6 +44,12 @@ public class BotonOperacion extends JButton {
 	
 	private Operacion op;
 	
+	/**
+	 * Constructor de BotonOperacion
+	 * @param posX la posición del borde izquierdo del botón
+	 * @param posY la posición del borde superior del botón
+	 * @param op índice de la operación que va a realizar el botón, relativo al enum {@link Operacion}
+	 */
 	public BotonOperacion(int posX, int posY, int op) {
 		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0xAFB2B7));
@@ -120,6 +136,9 @@ public class BotonOperacion extends JButton {
 		return temp;
 	}
 	
+	/**
+	 * @return Devuelve la {@link Operacion} que contiene el botón.
+	 */
 	public Operacion operacion() {
 		return op;
 	}
