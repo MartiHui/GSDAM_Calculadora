@@ -88,25 +88,25 @@ public class BotonMemoria extends JButton {
 			public void actionPerformed(ActionEvent ae) {
 				switch (((BotonMemoria)ae.getSource()).operacion()) {
 				case CLEAR:
-					calculadora.info.memoria = null;
+					calculadora.memoria = null;
 					calculadora.ui.disableMemoriaBtns();
 					break;
 					
 				case RECALL:
-					calculadora.ui.resultado_textField.setText(calculadora.info.memoria.toString());
+					calculadora.ui.resultado_textField.setText(calculadora.memoria.toString());
 					break;
 					
 				case STORAGE:
-					calculadora.info.memoria = new BigDecimal(calculadora.ui.resultado_textField.getText());
+					calculadora.memoria = new BigDecimal(calculadora.ui.resultado_textField.getText());
 					calculadora.ui.enableMemoriaBtns();
 					break;
 					
 				case ADD:
-					calculadora.info.memoria = calculadora.info.memoria.add(new BigDecimal(calculadora.ui.resultado_textField.getText()));
+					calculadora.memoria = calculadora.memoria.add(new BigDecimal(calculadora.ui.resultado_textField.getText()));
 					break;
 					
 				case REMOVE:
-					calculadora.info.memoria = calculadora.info.memoria.subtract(new BigDecimal(calculadora.ui.resultado_textField.getText()));
+					calculadora.memoria = calculadora.memoria.subtract(new BigDecimal(calculadora.ui.resultado_textField.getText()));
 					break;
 				}
 

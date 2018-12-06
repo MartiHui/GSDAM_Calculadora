@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonNumero;
+import CustomGUI.BotonOperacion.Operacion;
 import Vista.v_Calculadora;
 
 /**
@@ -17,14 +18,19 @@ public class c_Calculadora {
 	private static c_Calculadora INSTANCE = null;
 	
 	public v_Calculadora ui;
+	
 	public boolean borrarPantalla; // Para saber si, al introducir un numero, antes tenemos que borrar la pantalla
-	public CalculadoraInfo info;								
+	public BigDecimal memoria; // El valor actual en memoria
+	private String operacion; // La operacion a analizar
+	private String operacion_formateada; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
+	private Operacion ultimaOperacion;
+	private BigDecimal ultimoOperando;								
 	
 	private c_Calculadora() {
 		borrarPantalla = true;
-		info = new CalculadoraInfo();
-		
-		funcionalidadMenu();
+		memoria = null;
+		operacion = "";
+		operacion_formateada = "";
 	}
 	
 	public static c_Calculadora getInstance() {
@@ -36,9 +42,5 @@ public class c_Calculadora {
 		}
 		
 		return INSTANCE;
-	}
-	
-	private void funcionalidadMenu() {
-		
 	}
 }
