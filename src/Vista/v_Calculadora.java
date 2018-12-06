@@ -293,6 +293,7 @@ public class v_Calculadora extends JFrame {
 		
 		// PARENTESIS_CERRAR
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, BotonOperacion.HEIGHT, idx + normalOpLen);
+		cientifica_btns[idx].setEnabled(false); // Solo se puede usar el cerrar parentesis cuando hay un aprentesis abierto
 		idx++;
 		
 		// EXPONENTE
@@ -349,5 +350,10 @@ public class v_Calculadora extends JFrame {
 				contentPane.add(op);
 			}
 		}
+	}
+	
+	// Añade un caracter a la pantalla de resultado
+	public void addNumPantalla(String str) {
+		resultado_textField.setText(resultado_textField.getText() + str);
 	}
 }

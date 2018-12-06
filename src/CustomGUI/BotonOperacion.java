@@ -3,9 +3,13 @@ package CustomGUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import javax.swing.JButton;
 
+import Controlador.c_Calculadora;
 import Vista.v_Calculadora;
 
 /**
@@ -43,6 +47,7 @@ public class BotonOperacion extends JButton {
 	}
 	
 	private Operacion op;
+	private c_Calculadora calculadora;
 	
 	/**
 	 * Constructor de BotonOperacion
@@ -51,12 +56,15 @@ public class BotonOperacion extends JButton {
 	 * @param op índice de la operación que va a realizar el botón, relativo al enum {@link Operacion}
 	 */
 	public BotonOperacion(int posX, int posY, int op) {
+		calculadora = c_Calculadora.getInstance();
+		
 		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0xAFB2B7));
 		setMargin(new Insets(0, 0, 0, 0)); // Si no quitamos los margenes hay texto que no se veria en los botones
 		setFont(v_Calculadora.openSans.deriveFont(Font.PLAIN, 36));
 		this.op = Operacion.values()[op];
 		setText(buttonText());
+		addListener();
 	}
 	
 	// Devuelve el string que indica que tipo de operacion tiene este boton
@@ -134,6 +142,14 @@ public class BotonOperacion extends JButton {
 		}
 		
 		return temp;
+	}
+	
+	private void addListener() {
+		addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				calculadora.newOperation(((BotonOperacion)ae.getSource()).operacion());
+			}
+		});
 	}
 	
 	/**

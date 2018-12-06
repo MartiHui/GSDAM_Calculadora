@@ -48,9 +48,7 @@ public class BotonNumero extends JButton {
 					calculadora.ui.resultado_textField.setText("");
 				}
 				
-				calculadora.ui.resultado_textField.setText( // Añadimos el número a la derecha del todo
-						calculadora.ui.resultado_textField.getText() 
-						+ ((BotonNumero)ae.getSource()).getText());
+				calculadora.ui.addNumPantalla(((BotonNumero)ae.getSource()).getText());
 				
 				calculadora.borrarPantalla = false;
 			}
