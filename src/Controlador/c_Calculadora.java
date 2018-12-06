@@ -2,62 +2,43 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
+import CustomGUI.BotonMemoria;
 import CustomGUI.BotonNumero;
 import Vista.v_Calculadora;
 
+/**
+ * Almacena información sobre la calculador y añade funcionalidad a los menús.
+ * @author Hui Yang Yang
+ *
+ */
 public class c_Calculadora {
-	v_Calculadora ui;
+	private static c_Calculadora INSTANCE = null;
 	
-	public c_Calculadora() {
-		ui = new v_Calculadora();
+	public v_Calculadora ui;
+	public boolean borrarPantalla; // Para saber si, al introducir un numero, antes tenemos que borrar la pantalla
+	public CalculadoraInfo info;								
+	
+	private c_Calculadora() {
+		borrarPantalla = true;
+		info = new CalculadoraInfo();
 		
 		funcionalidadMenu();
-		funcionalidadBotones();
+	}
+	
+	public static c_Calculadora getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new c_Calculadora();
+			// No se inicializa la ui en el constructor ya que crearia un loop infinito
+			// de llamada a constructores
+			INSTANCE.ui = new v_Calculadora();
+		}
+		
+		return INSTANCE;
 	}
 	
 	private void funcionalidadMenu() {
 		
-	}
-	
-	private void funcionalidadBotones() {
-		botonesMemoria();
-		botonesNumero();
-		botonesOperacion();
-		botonModo();
-	}
-	
-	private void botonesMemoria() {
-		
-	}
-	
-	private void botonesNumero() {
-		for (int i = 0; i < 10; i++) {
-			ui.numero_btns[i].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent ae) {
-					// Si en la pantalla unicamente hay un 0 y añadimos un numero, quitamos ese 0, ya que los 0s a la izquierda no sirven de nada
-					if (ui.resultado_textField.getText().equals("0")) { 
-						ui.resultado_textField.setText("");
-					}
-					
-					ui.resultado_textField.setText( // Añadimos el número a la derecha del todo
-							ui.resultado_textField.getText() 
-							+ ((BotonNumero)ae.getSource()).getText());
-				}
-			});
-		}
-	}
-	
-	// Se añade funcionalidad a los botones d eoperaciones, tanto de la calculadora normal como la científica
-	private void botonesOperacion() {
-		
-	}
-	
-	private void botonModo() {
-		ui.mode_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				ui.switchMode();
-			}
-		});
 	}
 }

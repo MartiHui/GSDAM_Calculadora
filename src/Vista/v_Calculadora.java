@@ -153,6 +153,7 @@ public class v_Calculadora extends JFrame {
 		resultado_textField.setEditable(false);
 		resultado_textField.setFont(openSans.deriveFont(Font.PLAIN, 36)); 
 		resultado_textField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		resultado_textField.setText("0");
 		contentPane.add(resultado_textField);
 	}
 	
@@ -167,12 +168,32 @@ public class v_Calculadora extends JFrame {
 		botonModo();
 	}
 	
+	// Ya que al iniciarse la calculadora, no habra ningun valor en la memoria,
+	// se deshabilitan todos los botones de memoria excepto el de guardar en memoria
 	private void botonesMemoria() {
 		memoria_btns = new BotonMemoria[5]; // 5 botones: MC, MS, MR, M+ y M-
 		
 		for (int i = 0; i < 5; i++) { 
 			memoria_btns[i] = new BotonMemoria(i*BotonMemoria.WIDTH, 75, i);
 			contentPane.add(memoria_btns[i]);
+		}
+		
+		disableMemoriaBtns();
+	}
+	
+	// Desactiva todos los botones de memoria excepto el de guardar
+	public void disableMemoriaBtns() {
+		for (BotonMemoria bm : memoria_btns) {
+			if (bm.operacion() != BotonMemoria.MemoriaOperacion.STORAGE) {
+				bm.setEnabled(false);
+			}
+		}
+	}
+	
+	// Activa todos los botones de memoria
+	public void enableMemoriaBtns() {
+		for (BotonMemoria bm : memoria_btns) {
+			bm.setEnabled(true);
 		}
 	}
 	

@@ -2,9 +2,13 @@ package CustomGUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import javax.swing.JButton;
 
+import Controlador.c_Calculadora;
 import Vista.v_Calculadora;
 
 /**
@@ -30,6 +34,7 @@ public class BotonMemoria extends JButton {
 	}
 	
 	private MemoriaOperacion operacion;
+	private c_Calculadora calculadora;
 	
 	/**
 	 * Constructor de BotonMemoria
@@ -38,11 +43,14 @@ public class BotonMemoria extends JButton {
 	 * @param operacion índice de la operación que va a realizar el botón, relativo al enum {@link MemoriaOperacion}
 	 */
 	public BotonMemoria(int posX, int posY, int operacion) {
+		calculadora = c_Calculadora.getInstance();
+		
 		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0x7F8084));
 		setFont(v_Calculadora.openSans_Bold.deriveFont(Font.BOLD, 16));
 		this.operacion = MemoriaOperacion.values()[operacion];
 		setText(buttonText());
+		addListener();
 	}
 	
 	// Devuelve el string que indica que tipo de operacion tiene este boton
@@ -73,6 +81,38 @@ public class BotonMemoria extends JButton {
 		}
 		
 		return temp;
+	}
+	
+	private void addListener() {
+		addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				switch (((BotonMemoria)ae.getSource()).operacion()) {
+				case CLEAR:
+					calculadora.info.memoria = null;
+					calculadora.ui.disableMemoriaBtns();
+					break;
+					
+				case RECALL:
+					calculadora.ui.resultado_textField.setText(calculadora.info.memoria.toString());
+					break;
+					
+				case STORAGE:
+					calculadora.info.memoria = new BigDecimal(calculadora.ui.resultado_textField.getText());
+					calculadora.ui.enableMemoriaBtns();
+					break;
+					
+				case ADD:
+					calculadora.info.memoria = calculadora.info.memoria.add(new BigDecimal(calculadora.ui.resultado_textField.getText()));
+					break;
+					
+				case REMOVE:
+					calculadora.info.memoria = calculadora.info.memoria.subtract(new BigDecimal(calculadora.ui.resultado_textField.getText()));
+					break;
+				}
+
+				calculadora.borrarPantalla = true;
+			}
+		});
 	}
 	
 	/**
