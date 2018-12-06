@@ -22,6 +22,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Toolkit;
+import javax.swing.JTextPane;
+import javax.swing.JLabel;
 
 /**
  * Crea todos los elementos visuales de la calculadora.
@@ -43,8 +45,8 @@ public class v_Calculadora extends JFrame {
 	public JMenuItem desconectar_mnItem;
 	
 	// Pantallas que mostraran los inputs y resultados
-	public JTextField operaciones_textField;
-	public JTextField resultado_textField;
+	public JLabel operaciones_textField;
+	public JLabel resultado_textField;
 	
 	// Botones
 	public BotonMemoria memoria_btns[];
@@ -136,21 +138,19 @@ public class v_Calculadora extends JFrame {
 	 */
 	private void createPantalla() {
 		// Pantalla que mostrará la ecuación actual
-		operaciones_textField = new JTextField();
+		operaciones_textField = new JLabel();
 		operaciones_textField.setBounds(0, 0, 300, 25);
 		operaciones_textField.setHorizontalAlignment(SwingConstants.RIGHT);
 		operaciones_textField.setBackground(new Color(0xF3F3F3));
-		operaciones_textField.setEditable(false); // Solo se puede manejar las pantallas mediante los botones
 		operaciones_textField.setFont(openSans_Bold.deriveFont(Font.BOLD, 18)); 
 		operaciones_textField.setBorder(javax.swing.BorderFactory.createEmptyBorder()); // Quitamos los bordes para que las dos pantallsa parezcan una
 		contentPane.add(operaciones_textField);
 		
 		// Pantalla que mostrará el número que se esta introduciendo y los resultados
-		resultado_textField = new JTextField();
+		resultado_textField = new JLabel();
 		resultado_textField.setBounds(0, 25, 300, 50);
 		resultado_textField.setHorizontalAlignment(SwingConstants.RIGHT);
 		resultado_textField.setBackground(new Color(0xF3F3F3));
-		resultado_textField.setEditable(false);
 		resultado_textField.setFont(openSans.deriveFont(Font.PLAIN, 36)); 
 		resultado_textField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		resultado_textField.setText("0");

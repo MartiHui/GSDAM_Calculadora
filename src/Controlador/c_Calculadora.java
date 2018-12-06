@@ -10,7 +10,7 @@ import CustomGUI.BotonOperacion.Operacion;
 import Vista.v_Calculadora;
 
 /**
- * Almacena información sobre la calculador y añade funcionalidad a los menús.
+ * Almacena información sobre la calculadora.
  * @author Hui Yang Yang
  *
  */
