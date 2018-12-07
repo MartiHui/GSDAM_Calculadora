@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
+import javax.security.auth.callback.TextOutputCallback;
+
 import org.mariuszgromada.math.mxparser.Expression;
 
 import CustomGUI.BotonMemoria;
@@ -25,13 +27,13 @@ public class c_Calculadora {
 	
 	public boolean borrarPantalla; // Para saber si, al introducir un numero, antes tenemos que borrar la pantalla
 	public BigDecimal memoria; // El valor actual en memoria
-	private String operacionParser; // La operacion a analizar
-	private String unaryParserBuffer; // Almacena las operaciones de un solo operando que aun no este confirmada
-	private String operacionFormateada; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
-	private String unaryFormateadaBuffer; // La operacion unaria formateada que aun no este confirmada
+	public String operacionParser; // La operacion a analizar
+	private String unaryParser; // Almacena la operacion unaria a realizar
+	public String operacionFormateada; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
+	private String unaryFormateada; // La operacion unaria formateada
 	private Operacion ultimaOperacion;	
 	
-	private int numParentesis; // Para controlar que cada parentesis que use el usuario este abierto y cerrado
+	public int numParentesis; // Para controlar que cada parentesis que use el usuario este abierto y cerrado
 	
 	private c_Calculadora() {
 		borrarPantalla = true;
@@ -53,11 +55,9 @@ public class c_Calculadora {
 	/**
 	 * Resetea todas las variables menos la memoria
 	 */
-	private void reset() {
+	public void reset() {
 		operacionParser = ""; // La operacion a analizar
-		unaryParserBuffer = ""; // Almacena la operacion que aun no esta confirmada
 		operacionFormateada = ""; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
-		unaryFormateadaBuffer = ""; // La operacion formateada que aun no esta confirmada
 		ultimaOperacion = null;
 	}
 	
@@ -71,10 +71,12 @@ public class c_Calculadora {
 			// Si el usuario ha introducido un numero desde la ultima operacion, se
 			// realiza esa operacion con el nuevo numero antes de mostrar el resultado
 			if (!borrarPantalla) {
-				realizarOperacion();
+				realizarOperacion(op);
 			}
 			Expression e = new Expression(operacionParser);
 			ui.resultado_textField.setText(String.valueOf(e.calculate()));
+			ui.operaciones_textField.setText(operacionFormateada);
+			reset();
 			break;
 			
 		case C:
@@ -109,6 +111,24 @@ public class c_Calculadora {
 			}
 			ui.resultado_textField.setText(temp);
 			break;
+			
+		case PARENTESIS_ABRIR:
+			operacionFormateada += op.getTextoFormateado();
+			operacionParser += op.getTextoParser();
+			numParentesis++;
+			break;
+			
+		case PARENTESIS_CERRAR:
+			if (numParentesis > 0) {
+				operacionFormateada += op.getTextoFormateado();
+				operacionParser += op.getTextoParser();
+				numParentesis--;
+			}
+			break;
+			
+		case OPERACION:
+			realizarOperacion(op);
+			break;
 		}
 		
 		if (op.getTipo() != Operacion.Tipo.DECIMAL) {
@@ -119,7 +139,21 @@ public class c_Calculadora {
 	/**
 	 * Realiza la operación que haya en la variable ultimaOperacion
 	 */
-	private void realizarOperacion() {
+	private void realizarOperacion(Operacion op) {
+		if (ultimaOperacion != null && !ultimaOperacion.isUnary()) {
+			operacionFormateada += ultimaOperacion.getTextoFormateado();
+			operacionParser += ultimaOperacion.getTextoParser();
+		}
+		
+		operacionFormateada += ui.resultado_textField.getText();
+		operacionParser += ui.resultado_textField.getText();
+		
+		ultimaOperacion = op;
+		
+		ui.operaciones_textField.setText(operacionFormateada);
+	}
+	
+	public void finalizarOperacion() {
 		
 	}
 }

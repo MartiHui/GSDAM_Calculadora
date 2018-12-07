@@ -7,14 +7,6 @@ package Controlador;
  */
 public class Operacion {
 	public enum Tipo {
-		IGUAL,
-		CE,
-		C,
-		RETROCESO,
-		SIGNO,
-		DECIMAL,
-		PARENTESIS_ABRIR,
-		PARENTESIS_CERRAR,
 		OPERACION
 	}
 	

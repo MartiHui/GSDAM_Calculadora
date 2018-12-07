@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controlador.Operacion;
+import CustomGUI.BotonEspecial;
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonModo;
 import CustomGUI.BotonNumero;
@@ -54,6 +55,7 @@ public class v_Calculadora extends JFrame {
 	public BotonNumero numero_btns[];
 	public BotonOperacion operaciones_btns[]; // Las operaciones que saldrán siempre
 	public BotonOperacion cientifica_btns[]; // Las operaciones de la calculadora cientifica
+	public BotonEspecial especial_btns[]; // Las operaciones especiales como borrar numeros o cambiar de signo
 	public BotonModo mode_btn; // El boton que cambiara entre calculadora normal y científica
 
 	private boolean inNormalMode; // Estamos en la calculadora normal?
@@ -166,6 +168,7 @@ public class v_Calculadora extends JFrame {
 		botonesNumero();
 		botonesOperacion();
 		botonesCientifica();
+		botonesEspeciales();
 		botonModo();
 	}
 	
@@ -230,61 +233,61 @@ public class v_Calculadora extends JFrame {
 		int initialHeight = 100;
 		
 		// Igual
-		op = new Operacion(Operacion.Tipo.IGUAL, null, null, false);
+		op = new Operacion(Operacion.Tipo.IGUAL, "=", null, false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight+4*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// CE
-		op = new Operacion(Operacion.Tipo.CE, null, null, false);
+		op = new Operacion(Operacion.Tipo.CE, "CE", null, false);
 		operaciones_btns[idx] = new BotonOperacion(0, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// C
-		op = new Operacion(Operacion.Tipo.C, null, null, false);
+		op = new Operacion(Operacion.Tipo.C, "C", null, false);
 		operaciones_btns[idx] = new BotonOperacion(BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// RETROCESO
-		op = new Operacion(Operacion.Tipo.RETROCESO, null, null, false);
+		op = new Operacion(Operacion.Tipo.RETROCESO, "R", null, false);
 		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// SIGNO
-		op = new Operacion(Operacion.Tipo.SIGNO, null, null, false);
+		op = new Operacion(Operacion.Tipo.SIGNO, "\u00B1", null, false);
 		operaciones_btns[idx] = new BotonOperacion(0, initialHeight + 4*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// DECIMAL
-		op = new Operacion(Operacion.Tipo.DECIMAL, null, null, false);
+		op = new Operacion(Operacion.Tipo.DECIMAL, ".", null, false);
 		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight + 4*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		//DIVISION
-		op = new Operacion(Operacion.Tipo.OPERACION, "%s / ", "%s / ", false);
+		op = new Operacion(Operacion.Tipo.OPERACION, " / ", " / ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// MULTIPLICACION
-		op = new Operacion(Operacion.Tipo.OPERACION, "%s * ", "%s * ", false);
+		op = new Operacion(Operacion.Tipo.OPERACION, " * ", " * ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// RESTA
-		op = new Operacion(Operacion.Tipo.OPERACION, "%s - ", "%s - ", false);
+		op = new Operacion(Operacion.Tipo.OPERACION, " - ", " - ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 2*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// SUMA
-		op = new Operacion(Operacion.Tipo.OPERACION, "%s + ", "%s + ", false);
+		op = new Operacion(Operacion.Tipo.OPERACION, " + ", " + ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 3*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
@@ -311,7 +314,7 @@ public class v_Calculadora extends JFrame {
 		idx++;
 		
 		// EXPONENTE
-		op = new Operacion(Operacion.Tipo.OPERACION, "%s ^ ", "%s ^ ", false);
+		op = new Operacion(Operacion.Tipo.OPERACION, " ^ ", " ^ ", false);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 2 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
@@ -333,6 +336,33 @@ public class v_Calculadora extends JFrame {
 		// TANGENTE
 		op = new Operacion(Operacion.Tipo.OPERACION, "tan(%s)", "tan(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 6 * BotonOperacion.HEIGHT, op);
+		idx++;
+	}
+	
+	private void botonesEspeciales() {
+		especial_btns = new BotonEspecial[8];
+		int idx = 0;
+		
+		int initialHeight = 300;
+		
+		// IGUAL
+		especial_btns[idx] = new BotonEspecial(3*BotonOperacion.WIDTH, initialHeight+4*BotonEspecial.HEIGHT, BotonEspecial.Especial.I)
+		contentPane.add(especial_btns[idx]);
+		idx++;
+		
+		// CE
+		especial_btns[idx] = new BotonEspecial(0, initialHeight, BotonEspecial.Especial.CE);
+		contentPane.add(especial_btns[idx]);
+		idx++;
+		
+		// C
+		especial_btns[idx] = new BotonEspecial(BotonEspecial.WIDTH, initialHeight, BotonEspecial.Especial.C);
+		contentPane.add(especial_btns[idx]);
+		idx++;
+		
+		// RETROCESO
+		especial_btns[idx] = new BotonEspecial()
+		contentPane.add(especial_btns[idx]);
 		idx++;
 	}
 	
@@ -375,4 +405,5 @@ public class v_Calculadora extends JFrame {
 	public void addNumPantalla(String str) {
 		resultado_textField.setText(resultado_textField.getText() + str);
 	}
+	
 }

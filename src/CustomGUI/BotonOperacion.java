@@ -22,12 +22,6 @@ public class BotonOperacion extends JButton {
 	public static final int WIDTH = 75;
 	public static final int HEIGHT = 50;
 	
-	/**
-	 * Las operaciones que puede realizar la calculadora
-	 * @author Hui Yang Yang
-	 *
-	 */
-	
 	private Operacion op;
 	private c_Calculadora calculadora;
 	
