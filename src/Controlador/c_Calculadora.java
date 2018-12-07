@@ -8,7 +8,6 @@ import org.mariuszgromada.math.mxparser.Expression;
 
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonNumero;
-import CustomGUI.BotonOperacion.Operacion;
 import Vista.v_Calculadora;
 
 /**
@@ -67,7 +66,7 @@ public class c_Calculadora {
 	}
 	
 	public void newOperation(Operacion op) {
-		switch (op) {
+		switch (op.getTipo()) {
 		case IGUAL:
 			// Si el usuario ha introducido un numero desde la ultima operacion, se
 			// realiza esa operacion con el nuevo numero antes de mostrar el resultado
@@ -110,42 +109,9 @@ public class c_Calculadora {
 			}
 			ui.resultado_textField.setText(temp);
 			break;
-
-		case SUMA:
-		case RESTA:
-		case MULTIPLICACION:
-		case DIVISION:
-		case EXPONENTE:
-			// Si el usuario ha introducido un numero desde la ultima operacion, se
-			// realiza esa operacion con el nuevo numero, de lo contrario se sustituye
-			// la antigua operacion con la nueva
-			if (!borrarPantalla) {
-				realizarOperacion();
-			}
-			ultimaOperacion = op;
-			break;
-		
-			
-		case PARENTESIS_ABRIR:
-			break;
-			
-		case PARENTESIS_CERRAR:
-			break;
-			
-		case RAIZ_CUADRADA:
-			break;
-
-		case COSENO:
-			break;
-			
-		case SENO:
-			break;
-			
-		case TANGENTE:
-			break;
 		}
 		
-		if (op != Operacion.DECIMAL) {
+		if (op.getTipo() != Operacion.Tipo.DECIMAL) {
 			borrarPantalla = true;
 		}
 	}

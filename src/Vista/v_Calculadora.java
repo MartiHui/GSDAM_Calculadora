@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Controlador.Operacion;
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonModo;
 import CustomGUI.BotonNumero;
@@ -224,56 +225,67 @@ public class v_Calculadora extends JFrame {
 	private void botonesOperacion() {
 		operaciones_btns = new BotonOperacion[10];
 		int idx = 0;
+		Operacion op;
 		
 		int initialHeight = 100;
 		
 		// Igual
-		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight+4*BotonOperacion.HEIGHT, idx);
+		op = new Operacion(Operacion.Tipo.IGUAL, null, null, false);
+		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight+4*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// CE
-		operaciones_btns[idx] = new BotonOperacion(0, initialHeight, idx);
+		op = new Operacion(Operacion.Tipo.CE, null, null, false);
+		operaciones_btns[idx] = new BotonOperacion(0, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// C
-		operaciones_btns[idx] = new BotonOperacion(BotonOperacion.WIDTH, initialHeight, idx);
+		op = new Operacion(Operacion.Tipo.C, null, null, false);
+		operaciones_btns[idx] = new BotonOperacion(BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// RETROCESO
-		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight, idx);
+		op = new Operacion(Operacion.Tipo.RETROCESO, null, null, false);
+		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// SIGNO
-		operaciones_btns[idx] = new BotonOperacion(0, initialHeight + 4*BotonOperacion.HEIGHT, idx);
+		op = new Operacion(Operacion.Tipo.SIGNO, null, null, false);
+		operaciones_btns[idx] = new BotonOperacion(0, initialHeight + 4*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// DECIMAL
-		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight + 4*BotonOperacion.HEIGHT, idx);
+		op = new Operacion(Operacion.Tipo.DECIMAL, null, null, false);
+		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight + 4*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		//DIVISION
-		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight, idx);
+		op = new Operacion(Operacion.Tipo.OPERACION, "%s / ", "%s / ", false);
+		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// MULTIPLICACION
-		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + BotonOperacion.HEIGHT, idx);
+		op = new Operacion(Operacion.Tipo.OPERACION, "%s * ", "%s * ", false);
+		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// RESTA
-		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 2*BotonOperacion.HEIGHT, idx);
+		op = new Operacion(Operacion.Tipo.OPERACION, "%s - ", "%s - ", false);
+		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 2*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// SUMA
-		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 3*BotonOperacion.HEIGHT, idx);
+		op = new Operacion(Operacion.Tipo.OPERACION, "%s + ", "%s + ", false);
+		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 3*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 	}
@@ -283,37 +295,44 @@ public class v_Calculadora extends JFrame {
 	private void botonesCientifica() {
 		cientifica_btns = new BotonOperacion[7];
 		int idx = 0;
-		int normalOpLen = operaciones_btns.length; // Las operaciones cientificas continuan justo dfepues de las normales
+		Operacion op;
 		
 		int initialWidth = 300;
 				
 		// PARENTESIS_ABRIR
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 0, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.PARENTESIS_ABRIR, "(", "(", false);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 0, op);
 		idx++;
 		
 		// PARENTESIS_CERRAR
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, BotonOperacion.HEIGHT, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.PARENTESIS_CERRAR, ")", ")", false);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, BotonOperacion.HEIGHT, op);
 		cientifica_btns[idx].setEnabled(false); // Solo se puede usar el cerrar parentesis cuando hay un aprentesis abierto
 		idx++;
 		
 		// EXPONENTE
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 2 * BotonOperacion.HEIGHT, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.OPERACION, "%s ^ ", "%s ^ ", false);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 2 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// RAIZ_CUADRADA
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 3 * BotonOperacion.HEIGHT, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.OPERACION, "\u221A(%s)", "sqrt(%s) ", true);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 3 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// SENO
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 4 * BotonOperacion.HEIGHT, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.OPERACION, "sin(%s)", "sin(%s)", true);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 4 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// COSENO
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 5 * BotonOperacion.HEIGHT, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.OPERACION, "cos(%s)", "cos(%s)", true);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 5 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// TANGENTE
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 6 * BotonOperacion.HEIGHT, idx + normalOpLen);
+		op = new Operacion(Operacion.Tipo.OPERACION, "tan(%s)", "tan(%s)", true);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 6 * BotonOperacion.HEIGHT, op);
 		idx++;
 	}
 	
