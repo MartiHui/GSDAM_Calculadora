@@ -38,7 +38,7 @@ public class BotonOperacion extends JButton {
 		setBounds(posX, posY, WIDTH, HEIGHT);
 		setBackground(new Color(0xAFB2B7));
 		setMargin(new Insets(0, 0, 0, 0)); // Si no quitamos los margenes hay texto que no se veria en los botones
-		setFont(v_Calculadora.openSans.deriveFont(Font.PLAIN, 36));
+		setFont(v_Calculadora.openSans.deriveFont(Font.PLAIN, 32));
 		setText(String.format(op.getTextoFormateado(), ""));
 		addListener();
 	}
@@ -46,7 +46,7 @@ public class BotonOperacion extends JButton {
 	private void addListener() {
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				calculadora.newOperation(((BotonOperacion)ae.getSource()).operacion());
+				calculadora.realizarOperacion(((BotonOperacion)ae.getSource()).operacion());
 			}
 		});
 	}

@@ -26,12 +26,16 @@ public class c_Calculadora {
 	public v_Calculadora ui;
 	
 	public boolean borrarPantalla; // Para saber si, al introducir un numero, antes tenemos que borrar la pantalla
+	private boolean operacionAcabada;
+	
 	public BigDecimal memoria; // El valor actual en memoria
+	
 	public String operacionParser; // La operacion a analizar
 	private String unaryParser; // Almacena la operacion unaria a realizar
 	public String operacionFormateada; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
 	private String unaryFormateada; // La operacion unaria formateada
-	private Operacion ultimaOperacion;	
+	
+	public Operacion ultimaOperacion;	
 	
 	public int numParentesis; // Para controlar que cada parentesis que use el usuario este abierto y cerrado
 	
@@ -56,104 +60,100 @@ public class c_Calculadora {
 	 * Resetea todas las variables menos la memoria
 	 */
 	public void reset() {
-		operacionParser = ""; // La operacion a analizar
-		operacionFormateada = ""; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
+		operacionParser = ""; 
+		operacionFormateada = ""; 
+		unaryParser = "";
+		unaryFormateada = "";
 		ultimaOperacion = null;
 	}
 	
-	private BigDecimal getNum() {
-		return new BigDecimal(ui.resultado_textField.getText());
-	}
-	
-	public void newOperation(Operacion op) {
-		switch (op.getTipo()) {
-		case IGUAL:
-			// Si el usuario ha introducido un numero desde la ultima operacion, se
-			// realiza esa operacion con el nuevo numero antes de mostrar el resultado
-			if (!borrarPantalla) {
-				realizarOperacion(op);
-			}
-			Expression e = new Expression(operacionParser);
-			ui.resultado_textField.setText(String.valueOf(e.calculate()));
-			ui.operaciones_textField.setText(operacionFormateada);
-			reset();
-			break;
-			
-		case C:
-			reset();
-			ui.operaciones_textField.setText("");
-			
-		case CE:
-			ui.resultado_textField.setText("0");
-			break;
-			
-		case RETROCESO:
-			String temp = ui.resultado_textField.getText();
-			String resultado = temp.substring(0, temp.length()-1); // Obtenemos todo el string menos el caracter final
-			if (resultado.isEmpty()) resultado = "0";
-			ui.resultado_textField.setText(resultado);
-			break;
-			
-		case DECIMAL:
-			if (!ui.resultado_textField.getText().contains(".")) { // Comprobamos que el número no sea ya decimal
-				ui.addNumPantalla(".");
-			}
-			break;
-
-		case SIGNO:
-			temp = ui.resultado_textField.getText();
-			if (!temp.equals("0")) {
-				if (temp.charAt(0) == '-') { // Si ya es negativo
-					temp = temp.substring(1, temp.length()); // Quitamos el signo
-				} else { // Si es positivo
-					temp = "-" + temp; // añadimos el signo
-				}
-			}
-			ui.resultado_textField.setText(temp);
-			break;
-			
-		case PARENTESIS_ABRIR:
-			operacionFormateada += op.getTextoFormateado();
-			operacionParser += op.getTextoParser();
-			numParentesis++;
-			break;
-			
-		case PARENTESIS_CERRAR:
-			if (numParentesis > 0) {
-				operacionFormateada += op.getTextoFormateado();
-				operacionParser += op.getTextoParser();
-				numParentesis--;
-			}
-			break;
-			
-		case OPERACION:
-			realizarOperacion(op);
-			break;
-		}
-		
-		if (op.getTipo() != Operacion.Tipo.DECIMAL) {
-			borrarPantalla = true;
-		}
+	private String getNum() {
+		return ui.resultado_textField.getText();
 	}
 	
 	/**
 	 * Realiza la operación que haya en la variable ultimaOperacion
 	 */
-	private void realizarOperacion(Operacion op) {
-		if (ultimaOperacion != null && !ultimaOperacion.isUnary()) {
-			operacionFormateada += ultimaOperacion.getTextoFormateado();
-			operacionParser += ultimaOperacion.getTextoParser();
+	public void realizarOperacion(Operacion op) {
+		if (ultimaOperacion != null) {
+			if (op.isUnary()) {
+				if (ultimaOperacion.isUnary()) {
+					unaryParser = String.format(op.getTextoParser(), unaryParser);
+					unaryFormateada = String.format(op.getTextoFormateado(), unaryFormateada);
+				} else {
+					unaryParser = String.format(op.getTextoParser(), getNum());
+					unaryFormateada = String.format(op.getTextoFormateado(), getNum());
+					
+					operacionParser += ultimaOperacion.getTextoParser();
+					operacionFormateada += ultimaOperacion.getTextoFormateado();
+				}
+			} else {
+				if (ultimaOperacion.isUnary()) {
+					operacionParser += unaryParser; 
+					unaryParser = "";
+					operacionFormateada += unaryFormateada;
+					unaryFormateada = "";
+				} else {
+					operacionParser += String.format("%s %s", ultimaOperacion.getTextoParser() , getNum());
+					operacionFormateada += String.format("%s %s", ultimaOperacion.getTextoFormateado() , getNum());
+				}
+			}
+		} else {
+			if (op.isUnary()) {
+				unaryParser = String.format(op.getTextoParser(), getNum());
+				unaryFormateada = String.format(op.getTextoFormateado(), getNum());
+			} else {
+				operacionParser += getNum();
+				operacionFormateada += getNum();
+			}
 		}
 		
-		operacionFormateada += ui.resultado_textField.getText();
-		operacionParser += ui.resultado_textField.getText();
+		if (operacionAcabada) {
+			operacionAcabada = false;
+		}
 		
 		ultimaOperacion = op;
-		
-		ui.operaciones_textField.setText(operacionFormateada);
+		borrarPantalla = true;
+		updatePantalla();
 	}
 	
 	public void finalizarOperacion() {
+		realizarOperacion(new Operacion(null, " = ", " = ", false));
+		operacionAcabada = true;
+		reset();
+	}
+	
+	public void addNumPantalla(String num) {
+		// Si en la pantalla unicamente hay un 0 y añadimos un numero, quitamos ese 0, ya que los 0s a la izquierda no sirven de nada
+		if (ui.resultado_textField.getText().equals("0") || borrarPantalla) { 
+			ui.resultado_textField.setText("");
+		}
 		
+		if ((ultimaOperacion != null && ultimaOperacion.isUnary())) {
+			ui.operaciones_textField.setText(operacionFormateada);
+			ultimaOperacion = null;
+			unaryParser = "";
+			unaryFormateada = "";
+		}
+		
+		if (operacionAcabada) {
+			ui.operaciones_textField.setText("");
+			operacionAcabada = false;
+		}
+		
+		ui.resultado_textField.setText(ui.resultado_textField.getText() + num);
+		
+		borrarPantalla = false;
+	}
+	
+	public void updatePantalla() {
+		ui.operaciones_textField.setText(operacionFormateada +
+				((ultimaOperacion.getTextoFormateado() == null || ultimaOperacion.isUnary()) ? "" : ultimaOperacion.getTextoFormateado())
+				+ unaryFormateada);
+		
+		Expression e = new Expression((ultimaOperacion.isUnary()) ? unaryParser : operacionParser); 
+		double sol = e.calculate();
+		System.out.println(e.getExpressionString());
+		ui.resultado_textField.setText((sol - (int)sol != 0) ? String.valueOf(sol) : String.valueOf((int)sol));
 	}
 }

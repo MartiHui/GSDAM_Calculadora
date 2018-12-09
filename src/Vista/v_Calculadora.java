@@ -232,42 +232,6 @@ public class v_Calculadora extends JFrame {
 		
 		int initialHeight = 100;
 		
-		// Igual
-		op = new Operacion(Operacion.Tipo.IGUAL, "=", null, false);
-		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight+4*BotonOperacion.HEIGHT, op);
-		contentPane.add(operaciones_btns[idx]);
-		idx++;
-		
-		// CE
-		op = new Operacion(Operacion.Tipo.CE, "CE", null, false);
-		operaciones_btns[idx] = new BotonOperacion(0, initialHeight, op);
-		contentPane.add(operaciones_btns[idx]);
-		idx++;
-		
-		// C
-		op = new Operacion(Operacion.Tipo.C, "C", null, false);
-		operaciones_btns[idx] = new BotonOperacion(BotonOperacion.WIDTH, initialHeight, op);
-		contentPane.add(operaciones_btns[idx]);
-		idx++;
-		
-		// RETROCESO
-		op = new Operacion(Operacion.Tipo.RETROCESO, "R", null, false);
-		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight, op);
-		contentPane.add(operaciones_btns[idx]);
-		idx++;
-		
-		// SIGNO
-		op = new Operacion(Operacion.Tipo.SIGNO, "\u00B1", null, false);
-		operaciones_btns[idx] = new BotonOperacion(0, initialHeight + 4*BotonOperacion.HEIGHT, op);
-		contentPane.add(operaciones_btns[idx]);
-		idx++;
-		
-		// DECIMAL
-		op = new Operacion(Operacion.Tipo.DECIMAL, ".", null, false);
-		operaciones_btns[idx] = new BotonOperacion(2*BotonOperacion.WIDTH, initialHeight + 4*BotonOperacion.HEIGHT, op);
-		contentPane.add(operaciones_btns[idx]);
-		idx++;
-		
 		//DIVISION
 		op = new Operacion(Operacion.Tipo.OPERACION, " / ", " / ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight, op);
@@ -296,22 +260,11 @@ public class v_Calculadora extends JFrame {
 	// Creamos los botones de operaciones avanzadas, pero NO los añadimos a la pantalla, ya que por defecto la calculadora
 	// empieza en modo normal. Nos encargaremos de mostrar los botones cuando el usuario elija la calculadora científica
 	private void botonesCientifica() {
-		cientifica_btns = new BotonOperacion[7];
+		cientifica_btns = new BotonOperacion[5];
 		int idx = 0;
 		Operacion op;
 		
 		int initialWidth = 300;
-				
-		// PARENTESIS_ABRIR
-		op = new Operacion(Operacion.Tipo.PARENTESIS_ABRIR, "(", "(", false);
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, 0, op);
-		idx++;
-		
-		// PARENTESIS_CERRAR
-		op = new Operacion(Operacion.Tipo.PARENTESIS_CERRAR, ")", ")", false);
-		cientifica_btns[idx] = new BotonOperacion(initialWidth, BotonOperacion.HEIGHT, op);
-		cientifica_btns[idx].setEnabled(false); // Solo se puede usar el cerrar parentesis cuando hay un aprentesis abierto
-		idx++;
 		
 		// EXPONENTE
 		op = new Operacion(Operacion.Tipo.OPERACION, " ^ ", " ^ ", false);
@@ -343,10 +296,10 @@ public class v_Calculadora extends JFrame {
 		especial_btns = new BotonEspecial[8];
 		int idx = 0;
 		
-		int initialHeight = 300;
+		int initialHeight = 100;
 		
 		// IGUAL
-		especial_btns[idx] = new BotonEspecial(3*BotonOperacion.WIDTH, initialHeight+4*BotonEspecial.HEIGHT, BotonEspecial.Especial.I)
+		especial_btns[idx] = new BotonEspecial(3*BotonEspecial.WIDTH, initialHeight+4*BotonEspecial.HEIGHT, BotonEspecial.Especial.IGUAL);
 		contentPane.add(especial_btns[idx]);
 		idx++;
 		
@@ -361,8 +314,26 @@ public class v_Calculadora extends JFrame {
 		idx++;
 		
 		// RETROCESO
-		especial_btns[idx] = new BotonEspecial()
+		especial_btns[idx] = new BotonEspecial(2*BotonEspecial.WIDTH, initialHeight, BotonEspecial.Especial.RETROCESO);
 		contentPane.add(especial_btns[idx]);
+		idx++;
+		
+		// SIGNO
+		especial_btns[idx] = new BotonEspecial(0, initialHeight + 4*BotonEspecial.HEIGHT, BotonEspecial.Especial.SIGNO);
+		contentPane.add(especial_btns[idx]);
+		idx++;
+		
+		// DECIMAL
+		especial_btns[idx] = new BotonEspecial(2*BotonEspecial.WIDTH, initialHeight + 4*BotonEspecial.HEIGHT, BotonEspecial.Especial.DECIMAL);
+		contentPane.add(especial_btns[idx]);
+		idx++;
+		
+		// PARENTESIS_ABRIR
+		especial_btns[idx] = new BotonEspecial(300, 0, BotonEspecial.Especial.PARENTESIS_ABRIR);
+		idx++;
+		
+		// PARENTESIS_CERRAR
+		especial_btns[idx] = new BotonEspecial(300, BotonEspecial.HEIGHT, BotonEspecial.Especial.PARENTESIS_CERRAR);
 		idx++;
 	}
 	
@@ -385,6 +356,8 @@ public class v_Calculadora extends JFrame {
 			for (BotonOperacion op : cientifica_btns) {
 				contentPane.remove(op);
 			}
+			contentPane.remove(especial_btns[6]);
+			contentPane.remove(especial_btns[7]);
 			// Encogemos la ventana
 			contentPane.setPreferredSize(new Dimension(315, 350));
 			pack();
@@ -398,12 +371,9 @@ public class v_Calculadora extends JFrame {
 			for (BotonOperacion op : cientifica_btns) {
 				contentPane.add(op);
 			}
+			contentPane.add(especial_btns[6]);
+			contentPane.add(especial_btns[7]);
 		}
-	}
-	
-	// Añade un caracter a la pantalla de resultado
-	public void addNumPantalla(String str) {
-		resultado_textField.setText(resultado_textField.getText() + str);
 	}
 	
 }

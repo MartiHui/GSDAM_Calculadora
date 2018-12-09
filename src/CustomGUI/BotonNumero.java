@@ -43,14 +43,7 @@ public class BotonNumero extends JButton {
 	private void addListener() {
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				// Si en la pantalla unicamente hay un 0 y añadimos un numero, quitamos ese 0, ya que los 0s a la izquierda no sirven de nada
-				if (calculadora.ui.resultado_textField.getText().equals("0") || calculadora.borrarPantalla) { 
-					calculadora.ui.resultado_textField.setText("");
-				}
-				
-				calculadora.ui.addNumPantalla(((BotonNumero)ae.getSource()).getText());
-				
-				calculadora.borrarPantalla = false;
+				calculadora.addNumPantalla(((BotonNumero)ae.getSource()).getText());
 			}
 		});
 	}
