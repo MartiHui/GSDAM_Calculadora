@@ -118,7 +118,7 @@ public class c_Calculadora {
 	}
 	
 	public void finalizarOperacion() {
-		realizarOperacion(new Operacion(null, " = ", " = ", false));
+		realizarOperacion(new Operacion(" = ", " = ", false));
 		operacionAcabada = true;
 		reset();
 	}

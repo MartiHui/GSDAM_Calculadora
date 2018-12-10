@@ -233,25 +233,25 @@ public class v_Calculadora extends JFrame {
 		int initialHeight = 100;
 		
 		//DIVISION
-		op = new Operacion(Operacion.Tipo.OPERACION, " / ", " / ", false);
+		op = new Operacion(" / ", " / ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// MULTIPLICACION
-		op = new Operacion(Operacion.Tipo.OPERACION, " * ", " * ", false);
+		op = new Operacion(" * ", " * ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// RESTA
-		op = new Operacion(Operacion.Tipo.OPERACION, " - ", " - ", false);
+		op = new Operacion(" - ", " - ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 2*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// SUMA
-		op = new Operacion(Operacion.Tipo.OPERACION, " + ", " + ", false);
+		op = new Operacion(" + ", " + ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 3*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
@@ -260,34 +260,44 @@ public class v_Calculadora extends JFrame {
 	// Creamos los botones de operaciones avanzadas, pero NO los añadimos a la pantalla, ya que por defecto la calculadora
 	// empieza en modo normal. Nos encargaremos de mostrar los botones cuando el usuario elija la calculadora científica
 	private void botonesCientifica() {
-		cientifica_btns = new BotonOperacion[5];
+		cientifica_btns = new BotonOperacion[7];
 		int idx = 0;
 		Operacion op;
 		
 		int initialWidth = 300;
 		
+		// MODULO
+		op = new Operacion(" Mod ", " # ", false);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, 0, op);
+		idx++;
+		
+		// LOGARITMO NATURAL
+		op = new Operacion(" Ln(%s) ", " ln(%s) ", true);
+		cientifica_btns[idx] = new BotonOperacion(initialWidth, BotonOperacion.HEIGHT, op);
+		idx++;
+		
 		// EXPONENTE
-		op = new Operacion(Operacion.Tipo.OPERACION, " ^ ", " ^ ", false);
+		op = new Operacion(" ^ ", " ^ ", false);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 2 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// RAIZ_CUADRADA
-		op = new Operacion(Operacion.Tipo.OPERACION, "\u221A(%s)", "sqrt(%s) ", true);
+		op = new Operacion("\u221A(%s)", "sqrt(%s) ", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 3 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// SENO
-		op = new Operacion(Operacion.Tipo.OPERACION, "sin(%s)", "sin(%s)", true);
+		op = new Operacion("sin(%s)", "sin(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 4 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// COSENO
-		op = new Operacion(Operacion.Tipo.OPERACION, "cos(%s)", "cos(%s)", true);
+		op = new Operacion("cos(%s)", "cos(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 5 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// TANGENTE
-		op = new Operacion(Operacion.Tipo.OPERACION, "tan(%s)", "tan(%s)", true);
+		op = new Operacion("tan(%s)", "tan(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 6 * BotonOperacion.HEIGHT, op);
 		idx++;
 	}
@@ -328,13 +338,13 @@ public class v_Calculadora extends JFrame {
 		contentPane.add(especial_btns[idx]);
 		idx++;
 		
-		// PARENTESIS_ABRIR
-		especial_btns[idx] = new BotonEspecial(300, 0, BotonEspecial.Especial.PARENTESIS_ABRIR);
-		idx++;
-		
-		// PARENTESIS_CERRAR
-		especial_btns[idx] = new BotonEspecial(300, BotonEspecial.HEIGHT, BotonEspecial.Especial.PARENTESIS_CERRAR);
-		idx++;
+//		// PARENTESIS_ABRIR
+//		especial_btns[idx] = new BotonEspecial(300, 0, BotonEspecial.Especial.PARENTESIS_ABRIR);
+//		idx++;
+//		
+//		// PARENTESIS_CERRAR
+//		especial_btns[idx] = new BotonEspecial(300, BotonEspecial.HEIGHT, BotonEspecial.Especial.PARENTESIS_CERRAR);
+//		idx++;
 	}
 	
 	private void botonModo() {
@@ -352,12 +362,14 @@ public class v_Calculadora extends JFrame {
 			// Movemos el botón de cambiar de modo
 			mode_btn.setLocation(300, 0);
 			mode_btn.setText(">");
+			
 			// Quitamos las operiones de la cientifica
 			for (BotonOperacion op : cientifica_btns) {
 				contentPane.remove(op);
 			}
-			contentPane.remove(especial_btns[6]);
-			contentPane.remove(especial_btns[7]);
+//			contentPane.remove(especial_btns[6]);
+//			contentPane.remove(especial_btns[7]);
+			
 			// Encogemos la ventana
 			contentPane.setPreferredSize(new Dimension(315, 350));
 			pack();
@@ -371,8 +383,8 @@ public class v_Calculadora extends JFrame {
 			for (BotonOperacion op : cientifica_btns) {
 				contentPane.add(op);
 			}
-			contentPane.add(especial_btns[6]);
-			contentPane.add(especial_btns[7]);
+//			contentPane.add(especial_btns[6]);
+//			contentPane.add(especial_btns[7]);
 		}
 	}
 	

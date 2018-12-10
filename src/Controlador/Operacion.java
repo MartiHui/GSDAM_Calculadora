@@ -6,25 +6,15 @@ package Controlador;
  *
  */
 public class Operacion {
-	public enum Tipo {
-		OPERACION
-	}
-	
-	private Tipo tipo;
 	private String textoFormateado;
 	private String textoParser;
 	
 	private boolean isUnary; // Si la operacion es de un solo operando
 	
-	public Operacion(Tipo tipo, String format, String parser, boolean isUnary) {
-		this.tipo = tipo;
+	public Operacion(String format, String parser, boolean isUnary) {
 		this.textoFormateado = format;
 		this.textoParser = parser;
 		this.isUnary = isUnary;
-	}
-	
-	public Tipo getTipo() {
-		return tipo;
 	}
 	
 	public String getTextoFormateado() {

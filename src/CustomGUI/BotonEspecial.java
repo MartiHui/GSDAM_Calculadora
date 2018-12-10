@@ -5,14 +5,10 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-import java.text.spi.NumberFormatProvider;
 
 import javax.swing.JButton;
 
-import Controlador.Operacion;
 import Controlador.c_Calculadora;
-import CustomGUI.BotonMemoria.MemoriaOperacion;
 import Vista.v_Calculadora;
 
 /**
@@ -32,8 +28,8 @@ public class BotonEspecial extends JButton {
 		RETROCESO,
 		SIGNO,
 		DECIMAL,
-		PARENTESIS_ABRIR,
-		PARENTESIS_CERRAR,
+//		PARENTESIS_ABRIR,
+//		PARENTESIS_CERRAR,
 	}
 	
 	private Especial op;
@@ -72,13 +68,13 @@ public class BotonEspecial extends JButton {
 				temp = "=";
 				break;
 				
-			case PARENTESIS_ABRIR:
-				temp = "(";
-				break;
-				
-			case PARENTESIS_CERRAR:
-				temp = ")";
-				break;
+//			case PARENTESIS_ABRIR:
+//				temp = "(";
+//				break;
+//				
+//			case PARENTESIS_CERRAR:
+//				temp = ")";
+//				break;
 				
 			case RETROCESO:
 				temp = "\u2190";
@@ -106,8 +102,9 @@ public class BotonEspecial extends JButton {
 						break;
 						
 					case DECIMAL:
-						if (!calculadora.ui.resultado_textField.getText().contains(".")) { // Comprobamos que el número no sea ya decimal
-							calculadora.addNumPantalla(".");
+						String temp = calculadora.ui.resultado_textField.getText();
+						if (!temp.contains(".")) { // Comprobamos que el número no sea ya decimal
+							calculadora.addNumPantalla((temp.equals("0")) ? "0." : ".");
 						}
 						break;
 						
@@ -115,25 +112,25 @@ public class BotonEspecial extends JButton {
 						calculadora.finalizarOperacion();
 						break;
 						
-					case PARENTESIS_ABRIR:
-						calculadora.operacionFormateada += "(";
-						calculadora.operacionParser += "(";
-						calculadora.numParentesis++;
-						calculadora.ui.operaciones_textField.setText(calculadora.operacionFormateada);
-						break;
-						
-					case PARENTESIS_CERRAR:
-						if (calculadora.numParentesis > 0) {
-							
-							calculadora.operacionFormateada += ")";
-							calculadora.operacionParser += ")";
-							calculadora.numParentesis--;
-							calculadora.ui.operaciones_textField.setText(calculadora.operacionFormateada);
-						}
-						break;
+//					case PARENTESIS_ABRIR:
+//						calculadora.operacionFormateada += "(";
+//						calculadora.operacionParser += "(";
+//						calculadora.numParentesis++;
+//						calculadora.ui.operaciones_textField.setText(calculadora.operacionFormateada);
+//						break;
+//						
+//					case PARENTESIS_CERRAR:
+//						if (calculadora.numParentesis > 0) {
+//							
+//							calculadora.operacionFormateada += ")";
+//							calculadora.operacionParser += ")";
+//							calculadora.numParentesis--;
+//							calculadora.ui.operaciones_textField.setText(calculadora.operacionFormateada);
+//						}
+//						break;
 						
 					case RETROCESO:
-						String temp = calculadora.ui.resultado_textField.getText();
+						temp = calculadora.ui.resultado_textField.getText();
 						String resultado = temp.substring(0, temp.length()-1); // Obtenemos todo el string menos el caracter final
 						if (resultado.isEmpty()) resultado = "0";
 						calculadora.ui.resultado_textField.setText(resultado);
