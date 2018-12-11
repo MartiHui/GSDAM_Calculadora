@@ -47,6 +47,10 @@ public class c_Calculadora {
 	
 	//public int numParentesis; // Para controlar que cada parentesis que use el usuario este abierto y cerrado
 	
+	public static void main(String[] args) {
+		c_Calculadora calc = c_Calculadora.getInstance();
+	}
+	
 	private c_Calculadora() {
 		borrarPantalla = true;
 		memoria = 0;
@@ -60,6 +64,7 @@ public class c_Calculadora {
 			// de llamada a constructores
 			INSTANCE.ui = new v_Calculadora();
 			INSTANCE.funcionalidadMenu();
+			new c_Login(); // Para que el usuario pueda iniciar sesion en caunto empieze el programa
 		}
 		
 		return INSTANCE;
