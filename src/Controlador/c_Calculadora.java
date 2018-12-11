@@ -10,7 +10,9 @@ import org.mariuszgromada.math.mxparser.Expression;
 
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonNumero;
+import Modelo.Usuario;
 import Vista.v_Calculadora;
+import utils.TipoOperacion;
 
 /**
  * Almacena información sobre la calculadora.
@@ -18,30 +20,32 @@ import Vista.v_Calculadora;
  *
  */
 public class c_Calculadora {
-	final private String  FORMAT_START = "<html><body>";
-	final private String FORMAT_END = "</html></body>";
+//	final private String  FORMAT_START = "<html><body>";
+//	final private String FORMAT_END = "</html></body>";
 	
 	private static c_Calculadora INSTANCE = null;
 	
 	public v_Calculadora ui;
 	
+	public Usuario usuario;
+	
 	public boolean borrarPantalla; // Para saber si, al introducir un numero, antes tenemos que borrar la pantalla
 	private boolean operacionAcabada;
 	
-	public BigDecimal memoria; // El valor actual en memoria
+	public double memoria; // El valor actual en memoria
 	
 	public String operacionParser; // La operacion a analizar
 	private String unaryParser; // Almacena la operacion unaria a realizar
 	public String operacionFormateada; // La operacion formateada con los símbolos correspondientes a mostrar al usuario
 	private String unaryFormateada; // La operacion unaria formateada
 	
-	public Operacion ultimaOperacion;	
+	public TipoOperacion ultimaOperacion;	
 	
-	public int numParentesis; // Para controlar que cada parentesis que use el usuario este abierto y cerrado
+	//public int numParentesis; // Para controlar que cada parentesis que use el usuario este abierto y cerrado
 	
 	private c_Calculadora() {
 		borrarPantalla = true;
-		memoria = null;
+		memoria = 0;
 		reset();
 	}
 	
@@ -54,6 +58,40 @@ public class c_Calculadora {
 		}
 		
 		return INSTANCE;
+	}
+	
+	/**
+	 * Añade los ActionListeners de los elementos del menu
+	 */
+	private void funcionalidadMenu() {
+		ui.historial_mnItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		ui.salir_mnItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		ui.iniciar_mnItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new c_Login();
+			}
+		});
+		
+		ui.crear_mnItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new c_CrearUsuario();
+			}
+		});
+		
+		ui.desconectar_mnItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				usuario = null;
+			}
+		});
 	}
 	
 	/**
@@ -74,7 +112,7 @@ public class c_Calculadora {
 	/**
 	 * Realiza la operación que haya en la variable ultimaOperacion
 	 */
-	public void realizarOperacion(Operacion op) {
+	public void realizarOperacion(TipoOperacion op) {
 		if (ultimaOperacion != null) {
 			if (op.isUnary()) {
 				if (ultimaOperacion.isUnary()) {
@@ -118,7 +156,7 @@ public class c_Calculadora {
 	}
 	
 	public void finalizarOperacion() {
-		realizarOperacion(new Operacion(" = ", " = ", false));
+		realizarOperacion(new TipoOperacion(" = ", " = ", false));
 		operacionAcabada = true;
 		reset();
 	}

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 
 import javax.swing.JButton;
 
@@ -88,25 +87,25 @@ public class BotonMemoria extends JButton {
 			public void actionPerformed(ActionEvent ae) {
 				switch (((BotonMemoria)ae.getSource()).operacion()) {
 				case CLEAR:
-					calculadora.memoria = null;
+					calculadora.memoria = 0;
 					calculadora.ui.disableMemoriaBtns();
 					break;
 					
 				case RECALL:
-					calculadora.ui.resultado_textField.setText(calculadora.memoria.toString());
+					calculadora.ui.resultado_textField.setText(String.valueOf(calculadora.memoria));
 					break;
 					
 				case STORAGE:
-					calculadora.memoria = new BigDecimal(calculadora.ui.resultado_textField.getText());
+					calculadora.memoria = Double.parseDouble(calculadora.ui.resultado_textField.getText());
 					calculadora.ui.enableMemoriaBtns();
 					break;
 					
 				case ADD:
-					calculadora.memoria = calculadora.memoria.add(new BigDecimal(calculadora.ui.resultado_textField.getText()));
+					calculadora.memoria += Double.parseDouble(calculadora.ui.resultado_textField.getText());
 					break;
 					
 				case REMOVE:
-					calculadora.memoria = calculadora.memoria.subtract(new BigDecimal(calculadora.ui.resultado_textField.getText()));
+					calculadora.memoria -= Double.parseDouble(calculadora.ui.resultado_textField.getText());
 					break;
 				}
 

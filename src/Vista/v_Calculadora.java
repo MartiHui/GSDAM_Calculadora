@@ -8,12 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controlador.Operacion;
 import CustomGUI.BotonEspecial;
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonModo;
 import CustomGUI.BotonNumero;
 import CustomGUI.BotonOperacion;
+import utils.TipoOperacion;
 
 import java.io.IOException;
 
@@ -26,6 +26,8 @@ import javax.swing.JMenuItem;
 import java.awt.Toolkit;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Crea todos los elementos visuales de la calculadora.
@@ -228,30 +230,30 @@ public class v_Calculadora extends JFrame {
 	private void botonesOperacion() {
 		operaciones_btns = new BotonOperacion[10];
 		int idx = 0;
-		Operacion op;
+		TipoOperacion op;
 		
 		int initialHeight = 100;
 		
 		//DIVISION
-		op = new Operacion(" / ", " / ", false);
+		op = new TipoOperacion(" / ", " / ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// MULTIPLICACION
-		op = new Operacion(" * ", " * ", false);
+		op = new TipoOperacion(" * ", " * ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// RESTA
-		op = new Operacion(" - ", " - ", false);
+		op = new TipoOperacion(" - ", " - ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 2*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
 		
 		// SUMA
-		op = new Operacion(" + ", " + ", false);
+		op = new TipoOperacion(" + ", " + ", false);
 		operaciones_btns[idx] = new BotonOperacion(3*BotonOperacion.WIDTH, initialHeight + 3*BotonOperacion.HEIGHT, op);
 		contentPane.add(operaciones_btns[idx]);
 		idx++;
@@ -262,42 +264,42 @@ public class v_Calculadora extends JFrame {
 	private void botonesCientifica() {
 		cientifica_btns = new BotonOperacion[7];
 		int idx = 0;
-		Operacion op;
+		TipoOperacion op;
 		
 		int initialWidth = 300;
 		
 		// MODULO
-		op = new Operacion(" Mod ", " # ", false);
+		op = new TipoOperacion(" Mod ", " # ", false);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 0, op);
 		idx++;
 		
 		// LOGARITMO NATURAL
-		op = new Operacion(" Ln(%s) ", " ln(%s) ", true);
+		op = new TipoOperacion(" Ln(%s) ", " ln(%s) ", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// EXPONENTE
-		op = new Operacion(" ^ ", " ^ ", false);
+		op = new TipoOperacion(" ^ ", " ^ ", false);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 2 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// RAIZ_CUADRADA
-		op = new Operacion("\u221A(%s)", "sqrt(%s) ", true);
+		op = new TipoOperacion("\u221A(%s)", "sqrt(%s) ", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 3 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// SENO
-		op = new Operacion("sin(%s)", "sin(%s)", true);
+		op = new TipoOperacion("sin(%s)", "sin(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 4 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// COSENO
-		op = new Operacion("cos(%s)", "cos(%s)", true);
+		op = new TipoOperacion("cos(%s)", "cos(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 5 * BotonOperacion.HEIGHT, op);
 		idx++;
 		
 		// TANGENTE
-		op = new Operacion("tan(%s)", "tan(%s)", true);
+		op = new TipoOperacion("tan(%s)", "tan(%s)", true);
 		cientifica_btns[idx] = new BotonOperacion(initialWidth, 6 * BotonOperacion.HEIGHT, op);
 		idx++;
 	}
@@ -325,6 +327,7 @@ public class v_Calculadora extends JFrame {
 		
 		// RETROCESO
 		especial_btns[idx] = new BotonEspecial(2*BotonEspecial.WIDTH, initialHeight, BotonEspecial.Especial.RETROCESO);
+		especial_btns[idx].setFont(new Font("Arial Black", Font.PLAIN, 36)); // La fuente Open Sans no soporta el simbolo de la flecha
 		contentPane.add(especial_btns[idx]);
 		idx++;
 		
@@ -387,5 +390,4 @@ public class v_Calculadora extends JFrame {
 //			contentPane.add(especial_btns[7]);
 		}
 	}
-	
 }

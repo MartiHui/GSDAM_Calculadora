@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 
 import javax.swing.JButton;
 
-import Controlador.Operacion;
 import Controlador.c_Calculadora;
 import Vista.v_Calculadora;
+import utils.TipoOperacion;
 
 /**
  * Botón propio derivado de JButton para la creación de los botones de operación.
@@ -22,16 +22,16 @@ public class BotonOperacion extends JButton {
 	public static final int WIDTH = 75;
 	public static final int HEIGHT = 50;
 	
-	private Operacion op;
+	private TipoOperacion op;
 	private c_Calculadora calculadora;
 	
 	/**
 	 * Constructor de BotonOperacion
 	 * @param posX la posición del borde izquierdo del botón
 	 * @param posY la posición del borde superior del botón
-	 * @param op índice de la operación que va a realizar el botón, relativo al enum {@link Operacion}
+	 * @param op índice de la operación que va a realizar el botón, relativo al enum {@link TipoOperacion}
 	 */
-	public BotonOperacion(int posX, int posY, Operacion op) {
+	public BotonOperacion(int posX, int posY, TipoOperacion op) {
 		calculadora = c_Calculadora.getInstance();
 		this.op = op;
 		
@@ -52,9 +52,9 @@ public class BotonOperacion extends JButton {
 	}
 	
 	/**
-	 * @return Devuelve la {@link Operacion} que contiene el botón.
+	 * @return Devuelve la {@link TipoOperacion} que contiene el botón.
 	 */
-	public Operacion operacion() {
+	public TipoOperacion operacion() {
 		return op;
 	}
 }
