@@ -36,8 +36,6 @@ public class v_UserForm extends JDialog {
 		crearForm();
 		
 		pack();
-		setModal(true);
-		setVisible(true);
 	}
 	
 	private void prepareDialog() {		
@@ -46,7 +44,6 @@ public class v_UserForm extends JDialog {
 		setBackground(new Color(0xF7F6F6));
 		
 		contentPanel.setPreferredSize(new Dimension(265, 185));
-		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

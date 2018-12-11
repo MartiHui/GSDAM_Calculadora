@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS calculadora_db;
+DROP DATABASE IF EXISTS calculadora_db;
+CREATE DATABASE calculadora_db;
 USE calculadora_db;
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -27,7 +28,7 @@ CREATE TABLE operaciones (
 	fecha DATETIME NOT NULL,
 	operacion TEXT NOT NULL,
 	operacion_formateada TEXT NOT NULL,
-	resultado DECIMAL(30,30) NOT NULL,
+	resultado DECIMAL(65,30) NOT NULL,
 	PRIMARY KEY (id_operacion),
 	CONSTRAINT fk_operaciones_usuarios FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario) ON DELETE RESTRICT ON UPDATE CASCADE 
 );

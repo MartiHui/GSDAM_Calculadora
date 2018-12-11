@@ -7,11 +7,14 @@ import javax.swing.JOptionPane;
 
 public class Connector {
 	private static String dbName = "calculadora_db";
-	private static String loginUser;
-	private static String loginPassword;
+	private static String loginUser = "root";
+	private static String loginPassword = "";
 	private static String hostAddress = "localhost";
+	// https://stackoverflow.com/questions/26515700/mysql-jdbc-driver-5-1-33-time-zone-issue
+	private static String timezone = "?useUnicode=true&useJDBCCompliantTimezoneShift=true"
+			+ "&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static String url = 
-			String.format("jdbc:mysql://%s/%s", hostAddress, dbName);
+			String.format("jdbc:mysql://%s/%s%s", hostAddress, dbName, timezone);
 	
 	public static Connection con = null;
 	

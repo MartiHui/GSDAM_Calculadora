@@ -17,6 +17,13 @@ import java.awt.Rectangle;
 import java.awt.Dimension;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
+import javax.swing.JPopupMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
 
 public class pruebas_v extends JFrame {
 
@@ -67,6 +74,7 @@ public class pruebas_v extends JFrame {
 		scrollPane.setViewportView(panel);
 		
 		JPanel panel1 = new JPanel();
+		panel1.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		panel1.setBackground(Color.RED);
 		panel1.setBounds(0, 0, 50, 20);
 		panel1.setPreferredSize(new Dimension(50, 20));
@@ -78,6 +86,9 @@ public class pruebas_v extends JFrame {
 		panel2.setPreferredSize(new Dimension(50, 20));
 		panel.add(panel2);
 		
+		JPopupMenu popupMenu = new JPopupMenu();
+		addPopup(panel2, popupMenu);
+		
 		JPanel panel3 = new JPanel();
 		panel3.setBackground(Color.BLUE);
 		panel3.setBounds(0, 40,50, 20);
@@ -85,6 +96,11 @@ public class pruebas_v extends JFrame {
 		panel.add(panel3);
 		
 		JTextArea area = new JTextArea("JTextArea");
+		area.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 		area.setRows(1);
 		area.setBounds(0, 0, 0, 20);
 		area.setLineWrap(true);
@@ -120,17 +136,24 @@ public class pruebas_v extends JFrame {
 		panel5.setPreferredSize(new Dimension(50, 20));
 		panel.add(panel5);
 		
-		JPanel panel6 = new JPanel();
-		panel6.setBackground(Color.PINK);
-		panel6.setPreferredSize(new Dimension(50, 20));
-		panel.add(panel6);
-		
-		JPanel panel7 = new JPanel();
-		panel7.setBackground(Color.BLUE);
-		panel7.setPreferredSize(new Dimension(50, 20));
-		panel.add(panel7);
-		
 		panel.revalidate();
 		panel.repaint();
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }

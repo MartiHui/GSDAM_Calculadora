@@ -94,7 +94,7 @@ public class Operacion {
 						usuario,
 						rs.getString("fecha"),
 						rs.getString("operacion"),
-						rs.getString("operacionFormateada"),
+						rs.getString("operacion_formateada"),
 						rs.getDouble("resultado"));
 				operaciones.add(op);
 			}

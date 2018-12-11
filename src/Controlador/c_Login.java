@@ -3,6 +3,8 @@ package Controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import Modelo.Usuario;
 import Vista.v_UserForm;
 
@@ -15,6 +17,8 @@ public class c_Login {
 		calculadora = c_Calculadora.getInstance();
 		
 		funcionalidadBotones();
+		ui.setModal(true);
+		ui.setVisible(true);
 	}
 	
 	private void funcionalidadBotones() {
@@ -24,7 +28,7 @@ public class c_Login {
 			}
 		});
 		
-		ui.aceptar_btn.addActionListener(new ActionListener() {
+		ui.cancelar_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ui.dispose();
 			}
@@ -38,6 +42,7 @@ public class c_Login {
 		Usuario usuario = Usuario.login(nombre, password);
 		if (usuario != null) {
 			calculadora.usuario = usuario;
+			JOptionPane.showMessageDialog(null, "Bienvenido " + nombre);
 			ui.dispose();
 		}
 	}

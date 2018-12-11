@@ -5,13 +5,16 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 import javax.security.auth.callback.TextOutputCallback;
+import javax.swing.JOptionPane;
 
 import org.mariuszgromada.math.mxparser.Expression;
 
 import CustomGUI.BotonMemoria;
 import CustomGUI.BotonNumero;
+import Modelo.Operacion;
 import Modelo.Usuario;
 import Vista.v_Calculadora;
+import Vista.v_Historial;
 import utils.TipoOperacion;
 
 /**
@@ -33,6 +36,7 @@ public class c_Calculadora {
 	private boolean operacionAcabada;
 	
 	public double memoria; // El valor actual en memoria
+	private double resultado;
 	
 	public String operacionParser; // La operacion a analizar
 	private String unaryParser; // Almacena la operacion unaria a realizar
@@ -55,6 +59,7 @@ public class c_Calculadora {
 			// No se inicializa la ui en el constructor ya que crearia un loop infinito
 			// de llamada a constructores
 			INSTANCE.ui = new v_Calculadora();
+			INSTANCE.funcionalidadMenu();
 		}
 		
 		return INSTANCE;
@@ -66,6 +71,11 @@ public class c_Calculadora {
 	private void funcionalidadMenu() {
 		ui.historial_mnItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (usuario != null) {
+					new v_Historial(usuario);
+				} else {
+					JOptionPane.showMessageDialog(null, "No hay ningún usuario conectado");
+				}
 			}
 		});
 		
@@ -158,6 +168,9 @@ public class c_Calculadora {
 	public void finalizarOperacion() {
 		realizarOperacion(new TipoOperacion(" = ", " = ", false));
 		operacionAcabada = true;
+		if (usuario != null && !Double.isNaN(resultado)) {
+			Operacion.insert(usuario, operacionParser, operacionFormateada, resultado);
+		}
 		reset();
 	}
 	
@@ -190,8 +203,7 @@ public class c_Calculadora {
 				+ unaryFormateada);
 		
 		Expression e = new Expression((ultimaOperacion.isUnary()) ? unaryParser : operacionParser); 
-		double sol = e.calculate();
-		System.out.println(e.getExpressionString());
-		ui.resultado_textField.setText((sol - (int)sol != 0) ? String.valueOf(sol) : String.valueOf((int)sol));
+		resultado = e.calculate();
+		ui.resultado_textField.setText((resultado - (int)resultado != 0) ? String.valueOf(resultado) : String.valueOf((int)resultado));
 	}
 }

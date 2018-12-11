@@ -13,10 +13,12 @@ public class c_CrearUsuario {
 	private c_Calculadora calculadora;
 	
 	public c_CrearUsuario() {
-		ui = new v_UserForm("Login");
+		ui = new v_UserForm("Nuevo usuario");
 		calculadora = c_Calculadora.getInstance();
 		
 		funcionalidadBotones();
+		ui.setModal(true);
+		ui.setVisible(true);
 	}
 	
 	private void funcionalidadBotones() {
@@ -26,7 +28,7 @@ public class c_CrearUsuario {
 			}
 		});
 		
-		ui.aceptar_btn.addActionListener(new ActionListener() {
+		ui.cancelar_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ui.dispose();
 			}
@@ -43,6 +45,7 @@ public class c_CrearUsuario {
 			Usuario usuario = Usuario.insert(nombre, password);
 			if (usuario != null) {
 				calculadora.usuario = usuario;
+				JOptionPane.showMessageDialog(null, "Usuario creado");
 				ui.dispose();
 			}
 		}
